@@ -1,5 +1,11 @@
 
 <?php
+	error_reporting(-1); // reports all errors
+	ini_set("display_errors", "1"); // shows all errors
+	ini_set("log_errors", 1); 	
+	ini_set("error_log", "/tmp/php-error.log");
+
+	include "DatabaseConnection.php";
 
 	$inData = getRequestInfo();
 	
@@ -7,24 +13,27 @@
 	$firstName = "";
 	$lastName = "";
 
-	// Connecting to mysql server from PHP ...
-	// - localhost = servername
-	// - TheBeast  = username
-	// - WeLoveCOP4331 = password
-	// - COP4331   = database
-	$conn = new mysqli("localhost", "TheBeast", "WeLoveCOP4331", "COP4331"); 
-    // NOTE: following this tutorial https://www.geeksforgeeks.org/creating-a-registration-and-login-system-with-php-and-mysql/
+	// // Connecting to mysql server from PHP ...
+	// // - localhost = servername
+	// // - TheBeast  = username
+	// // - WeLoveCOP4331 = password
+	// // - COP4331   = database
+	// $conn = new mysqli("localhost", "TheBeast", "WeLoveCOP4331", "COP4331"); 
+    // // NOTE: following this tutorial https://www.geeksforgeeks.org/creating-a-registration-and-login-system-with-php-and-mysql/
 
-	if( $conn->connect_error )
-	{
-		returnWithError( $conn->connect_error );
-	}
-	else
-	{
-        // Check if user already exists in the database
-        $checkUserStatement = $conn->prepare("SELECT 'Login' FROM 'Users' WHERE 'Login' = ?");
-        //
-    }
+	// if( $conn->connect_error )
+	// {
+	// 	returnWithError( $conn->connect_error );
+	// }
+	// else
+	// {
+	// Check if user already exists in the database
+	$checkUserStatement = $conn->prepare("SELECT 'Login' FROM 'Users' WHERE 'Login' = ?");
+	$checkUserStatement->bind_param("s", $inData["login"]);
+	$checkUserStatement->execute();
+	$result = $checkUserStatement->get_result();
+
+    // }
 	// 	$stmt = $conn->prepare("SELECT ID,firstName,lastName FROM Users WHERE Login=? AND Password =?");
 	// 	$stmt->bind_param("ss", $inData["login"], $inData["password"]);
 	// 	$stmt->execute();

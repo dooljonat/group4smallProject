@@ -77,38 +77,38 @@ function doRegister()
 	
 	let url = urlBase + '/Register.' + extension;
 
-// 	let xhr = new XMLHttpRequest();
-// 	xhr.open("POST", url, true);
-// 	xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
-// 	try
-// 	{
-// 		xhr.onreadystatechange = function() 
-// 		{
-// 			if (this.readyState == 4 && this.status == 200) 
-// 			{
-// 				let jsonObject = JSON.parse( xhr.responseText );
-// 				userId = jsonObject.id;
+	let xhr = new XMLHttpRequest();
+	xhr.open("POST", url, true);
+	xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+	try
+	{
+		xhr.onreadystatechange = function() 
+		{
+			if (this.readyState == 4 && this.status == 200) 
+			{
+				// let jsonObject = JSON.parse( xhr.responseText );
+				// userId = jsonObject.id;
 		
-// 				if( userId < 1 )
-// 				{		
-// 					document.getElementById("loginResult").innerHTML = "User/Password combination incorrect";
-// 					return;
-// 				}
+				// if( userId < 1 )
+				// {		
+				// 	document.getElementById("loginResult").innerHTML = "User/Password combination incorrect";
+				// 	return;
+				// }
 		
-// 				firstName = jsonObject.firstName;
-// 				lastName = jsonObject.lastName;
+				// firstName = jsonObject.firstName;
+				// lastName = jsonObject.lastName;
 
-// 				saveCookie();
+				// saveCookie();
 	
-// 				window.location.href = "color.html";
-// 			}
-// 		};
-// 		xhr.send(jsonPayload);
-// 	}
-// 	catch(err)
-// 	{
-// 		document.getElementById("loginResult").innerHTML = err.message;
-// 	}
+				// window.location.href = "color.html";
+			}
+		};
+		xhr.send(jsonPayload);
+	}
+	catch(err)
+	{
+		document.getElementById("registerResult").innerHTML = err.message;
+	}
 }
 
 function saveCookie()
