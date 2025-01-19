@@ -7,7 +7,6 @@ body
 {
     font-size: 40px;
     width: 100%;
-    margin: 2% 5%;
     text-align: center;
     font-family: 'Ubuntu', sans-serif;
     color: #FFFFFF;
@@ -53,6 +52,16 @@ body
     background-color: #00d5124f;
     color: #FFFFFF;
     opacity: 50%;
+}
+
+#firstName
+{
+    font-size: 30px;
+}
+
+#lastName
+{
+    font-size: 30px;
 }
 
 #loginName
