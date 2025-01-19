@@ -32,17 +32,33 @@
 	{
 		// Prepare to insert new user into MySQL database
 		$registerUserStatement = $conn->prepare("INSERT INTO Users (FirstName,LastName,Login,Password) VALUES (?,?,?,?)");
-		$registerUserStatement->bind_param("ssss", $firstName, $lastName, $inData['login'], $inData['password']);
+		$registerUserStatement->bind_param("ssss", $inData['first'], $inData['last'], $inData['login'], $inData['password']);
 
 		// Execute insertion
 		if ($registerUserStatement->execute())
 		{
-			returnWithError("New user inserted!");
+			// Get newly added user from DB
+			$fetchUserStatement = $conn->prepare("SELECT ID,firstName,lastName FROM Users WHERE Login=?");
+			$fetchUserStatement->bind_param("s", $inData["login"]);
+			$fetchUserStatement->execute();
+			$result = $fetchUserStatement->get_result();
+
+			// If returned user has data (NOTE: it should)
+			if( $row = $result->fetch_assoc()  )
+			{
+				returnWithInfo( $row['firstName'], $row['lastName'], $row['ID'] );
+			}
+			else
+			{
+				returnWithError("User that was just added isn't appearing in our database... weird");
+			}
 		}
 		else
 		{
-			returnWithError("Oh naur...... it didn't work");
+			returnWithError("Oh no...... it didn't work");
 		}
+
+		$registerUserStatement->close();
 	}
 
 	$checkUserStatement->close();

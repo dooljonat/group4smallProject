@@ -60,18 +60,16 @@ function doLogin()
 function doRegister()
 {
 	console.log("Attempting to register a new user...");
-
-	userId = 0;
-	firstName = "";
-	lastName = "";
 	
+	let first = document.getElementById("firstName").value;
+	let last  = document.getElementById("lastName").value;
 	let login = document.getElementById("loginName").value;
 	let password = document.getElementById("loginPassword").value;
 //	var hash = md5( password );
 	
 	document.getElementById("registerResult").innerHTML = "";
 
-	let tmp = {login:login,password:password};
+	let tmp = {first:first, last:last, login:login, password:password};
 //	var tmp = {login:login,password:hash};
 	let jsonPayload = JSON.stringify( tmp );
 	
@@ -90,19 +88,16 @@ function doRegister()
 
 				let jsonObject = JSON.parse( xhr.responseText );
 				userId = jsonObject.id;
+
+				console.log(userId);
 		
 				if( userId < 1 )
 				{		
 					document.getElementById("registerResult").innerHTML = jsonObject.error;
 					return;
 				}
-		
-				// firstName = jsonObject.firstName;
-				// lastName = jsonObject.lastName;
-
-				// saveCookie();
 	
-				// window.location.href = "color.html";
+				window.location.href = "index.html";
 			}
 		};
 		xhr.send(jsonPayload);
