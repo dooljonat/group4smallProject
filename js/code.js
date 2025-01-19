@@ -86,14 +86,16 @@ function doRegister()
 		{
 			if (this.readyState == 4 && this.status == 200) 
 			{
-				// let jsonObject = JSON.parse( xhr.responseText );
-				// userId = jsonObject.id;
+				console.log(JSON.stringify(xhr.responseText));
+
+				let jsonObject = JSON.parse( xhr.responseText );
+				userId = jsonObject.id;
 		
-				// if( userId < 1 )
-				// {		
-				// 	document.getElementById("loginResult").innerHTML = "User/Password combination incorrect";
-				// 	return;
-				// }
+				if( userId < 1 )
+				{		
+					document.getElementById("registerResult").innerHTML = jsonObject.error;
+					return;
+				}
 		
 				// firstName = jsonObject.firstName;
 				// lastName = jsonObject.lastName;

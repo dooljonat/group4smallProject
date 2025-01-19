@@ -24,7 +24,7 @@
 	}
 	else
 	{
-		returnWithError("No Records Found");
+		returnWithError("");
 	}
 
 	$stmt->close();
