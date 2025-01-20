@@ -1,23 +1,33 @@
 <?php
-	$inData = getRequestInfo();
-	
-	$color = $inData["color"];
-	$userId = $inData["userId"];
+	error_reporting(-1); // reports all errors
+	ini_set("display_errors", "1"); // shows all errors
+	ini_set("log_errors", 1);
+	ini_set("error_log", "/tmp/php-error.log");
 
-	$conn = new mysqli("localhost", "TheBeast", "WeLoveCOP4331", "COP4331");
-	if ($conn->connect_error) 
-	{
-		returnWithError( $conn->connect_error );
-	} 
-	else
-	{
-		$stmt = $conn->prepare("INSERT into Colors (UserId,Name) VALUES(?,?)");
-		$stmt->bind_param("ss", $userId, $color);
-		$stmt->execute();
-		$stmt->close();
-		$conn->close();
-		returnWithError("");
-	}
+	include "DatabaseConnection.php";
+
+	$inData = getRequestInfo();
+
+	// TODO: Handle input validation using regex
+
+	// Get input data from add_contact.html form
+	$first = $inData["first"];
+	$last = $inData["last"];
+	$phoneNumber = $inData["phoneNumber"];
+	$email = $inData["email"];
+
+	// Convert UserId from string to int
+	$currentUserId = (int)$inData["currentUserId"];
+
+	// Insert new contact into MySQL
+	$stmt = $conn->prepare("INSERT INTO Contacts (FirstName, LastName, Phone, Email, UserID) VALUES(?, ?, ?, ?, ?)");
+	$stmt->bind_param("sssss", $first, $last, $phoneNumber, $email, $currentUserId);
+	$stmt->execute();
+	$stmt->close();
+
+	// Close MySQL connection and return
+	$conn->close();
+	returnWithError("");
 
 	function getRequestInfo()
 	{

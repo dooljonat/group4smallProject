@@ -108,6 +108,51 @@ function doRegister()
 	}
 }
 
+function addContact()
+{
+	// NOTE TO READERS: I'm not sure if handling the cookies in add_contact.html
+	// how color.html/contacts.html does it is necessary, as in,
+	// logging users out if the cookies return null,
+	// but it's probably better security and doesn't hurt for now
+
+	console.log("Attempting to add a new contact...");
+
+	// Grab new contact information from add_contact.html form
+	let first = document.getElementById("firstName").value;
+	let last  = document.getElementById("lastName").value;
+	let phoneNumber = document.getElementById("phoneNumber").value;
+	let email = document.getElementById("email").value;
+	
+	document.getElementById("createNewContactResult").innerHTML = "";
+
+	// Create JSON payload
+	let tmp = {first:first, last:last, phoneNumber:phoneNumber, email:email, currentUserId:userId};
+	let jsonPayload = JSON.stringify( tmp );
+
+	// Get URL for AddContact.php API
+	let url = urlBase + '/AddContact.' + extension;
+
+	// Send request to API to add new contact
+	let xhr = new XMLHttpRequest();
+	xhr.open("POST", url, true);
+	xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+	try
+	{
+		xhr.onreadystatechange = function() 
+		{
+			if (this.readyState == 4 && this.status == 200) 
+			{
+				document.getElementById("createNewContactResult").innerHTML = "Contact has been added";
+			}
+		};
+		xhr.send(jsonPayload);
+	}
+	catch(err)
+	{
+		document.getElementById("registerResult").innerHTML = err.message;
+	}
+}
+
 function saveCookie()
 {
 	let minutes = 20;
