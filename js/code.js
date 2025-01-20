@@ -1,4 +1,4 @@
-const urlBase = 'http://137.184.71.19/LAMPAPI';
+const urlBase = 'http://localhost/LAMPAPI';
 const extension = 'php';
 
 let userId = 0;
@@ -55,7 +55,57 @@ function doLogin()
 	{
 		document.getElementById("loginResult").innerHTML = err.message;
 	}
+}
 
+function doRegister()
+{
+	console.log("Attempting to register a new user...");
+	
+	let first = document.getElementById("firstName").value;
+	let last  = document.getElementById("lastName").value;
+	let login = document.getElementById("loginName").value;
+	let password = document.getElementById("loginPassword").value;
+//	var hash = md5( password );
+	
+	document.getElementById("registerResult").innerHTML = "";
+
+	let tmp = {first:first, last:last, login:login, password:password};
+//	var tmp = {login:login,password:hash};
+	let jsonPayload = JSON.stringify( tmp );
+	
+	let url = urlBase + '/Register.' + extension;
+
+	let xhr = new XMLHttpRequest();
+	xhr.open("POST", url, true);
+	xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+	try
+	{
+		xhr.onreadystatechange = function() 
+		{
+			if (this.readyState == 4 && this.status == 200) 
+			{
+				console.log(JSON.stringify(xhr.responseText));
+
+				let jsonObject = JSON.parse( xhr.responseText );
+				userId = jsonObject.id;
+
+				console.log(userId);
+		
+				if( userId < 1 )
+				{		
+					document.getElementById("registerResult").innerHTML = jsonObject.error;
+					return;
+				}
+	
+				window.location.href = "index.html";
+			}
+		};
+		xhr.send(jsonPayload);
+	}
+	catch(err)
+	{
+		document.getElementById("registerResult").innerHTML = err.message;
+	}
 }
 
 function saveCookie()

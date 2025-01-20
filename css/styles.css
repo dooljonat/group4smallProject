@@ -7,7 +7,6 @@ body
 {
     font-size: 40px;
     width: 100%;
-    margin: 2% 5%;
     text-align: center;
     font-family: 'Ubuntu', sans-serif;
     color: #FFFFFF;
@@ -55,6 +54,16 @@ body
     opacity: 50%;
 }
 
+#firstName
+{
+    font-size: 30px;
+}
+
+#lastName
+{
+    font-size: 30px;
+}
+
 #loginName
 {
 	font-size: 30px;
@@ -63,6 +72,12 @@ body
 {
 	font-size: 30px;
 }
+
+#registerButton
+{
+    margin-top: 2%;
+}
+
 #searchText
 {
 	font-size: 30px;
@@ -93,6 +108,17 @@ input[type="text"],input[type="password"]{
 }
 
 #loginResult{
+    display: inline-block;
+    font-size: 0.8em;
+    width: 90%;
+    text-align: center;
+    margin-left: 5%;
+    margin-bottom: 2%;
+    font-family: 'Ubuntu', sans-serif;
+    color: #95060a;
+}
+
+#registerResult{
     display: inline-block;
     font-size: 0.8em;
     width: 90%;
