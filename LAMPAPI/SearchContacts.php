@@ -5,10 +5,11 @@
 	ini_set("error_log", "/tmp/php-error.log");
 
 	$inData = getRequestInfo();
-	
+    
+    $tempResult = array();
 	$searchResults = array();
     $searchCount = 0;
-
+    
     include "DatabaseConnection.php";
 
     $stmt = $conn->prepare("select * from Contacts where FirstName like ? and UserID=?");
@@ -27,7 +28,7 @@
             "lastName" => $row["LastName"],
             "phone" => $row["Phone"],
             "email" => $row["Email"],
-        ]
+        ];
         
         array_push($searchResults, $tempResult);
     }
@@ -57,7 +58,7 @@
 
     function returnWithError( $err )
     {
-        $retValue = '{"id":0,"firstName":"","lastName":"","error":"' . $err . '"}';
+        $retValue = '{"id":0,"results":[],"error":"' . $err . '"}';
         sendResultInfoAsJson( $retValue );
     }
 
