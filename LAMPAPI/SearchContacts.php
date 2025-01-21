@@ -12,9 +12,10 @@
     
     include "DatabaseConnection.php";
 
-    $stmt = $conn->prepare("select * from Contacts where FirstName like ? and UserID=?");
-    $firstName = "%" . $inData["search"] . "%";
-    $stmt->bind_param("ss", $firstName, $inData["userId"]);
+    $stmt = $conn->prepare("select * from contacts where (UserID = ?) and ((? is NULL or ? = '' or FirstName like ?) and (? is null or ? = '' or LastName like ?))");
+    $firstName = "%" . $inData["firstName"] . "%";
+    $lastName = "%" . $inData["lastName"] . "%";
+    $stmt->bind_param("sss", $firstName, $inData["userId"]);
     $stmt->execute();
     
     $result = $stmt->get_result();
