@@ -142,7 +142,18 @@ function addContact()
 		{
 			if (this.readyState == 4 && this.status == 200) 
 			{
-				document.getElementById("createNewContactResult").innerHTML = "Contact has been added";
+				// Get response text from request
+				console.log(JSON.stringify(xhr.responseText));
+				let jsonObject = JSON.parse( xhr.responseText );
+			
+				if (jsonObject.error != "")
+				{
+					document.getElementById("createNewContactResult").innerHTML = jsonObject.error;
+				}
+				else
+				{
+					document.getElementById("createNewContactResult").innerHTML = "Contact has been added";
+				}
 			}
 		};
 		xhr.send(jsonPayload);

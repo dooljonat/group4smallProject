@@ -8,8 +8,6 @@
 
 	$inData = getRequestInfo();
 
-	// TODO: Handle input validation using regex
-
 	// Get input data from add_contact.html form
 	$first = $inData["first"];
 	$last = $inData["last"];
@@ -19,15 +17,38 @@
 	// Convert UserId from string to int
 	$currentUserId = (int)$inData["currentUserId"];
 
-	// Insert new contact into MySQL
-	$stmt = $conn->prepare("INSERT INTO Contacts (FirstName, LastName, Phone, Email, UserID) VALUES(?, ?, ?, ?, ?)");
-	$stmt->bind_param("sssss", $first, $last, $phoneNumber, $email, $currentUserId);
-	$stmt->execute();
-	$stmt->close();
+	// Ensure data is not empty
+	if ($first == "" || $last == "" || $phoneNumber == "" || $email == "")
+	{
+		returnWithError("Please ensure all forms are filled");
+	}
+	else
+	{
+		// Validate phone number with regex expression
+		if (!preg_match("/^[0-9]{3}-[0-9]{3}-[0-9]{4}$/", $phoneNumber))
+		{
+			returnWithError("Invalid phone number. Please use format: <###>-<###>-<####>");
+		}
+		// Validate email with 
+		else if (!filter_var($email, FILTER_VALIDATE_EMAIL))
+		{
+			returnWithError("Invalid email address. Please use format: <email>@<address>.com");
+		}
+
+		// If all input data is valid, 
+		//  insert new contact into MySQL database
+		else
+		{
+			$stmt = $conn->prepare("INSERT INTO Contacts (FirstName, LastName, Phone, Email, UserID) VALUES(?, ?, ?, ?, ?)");
+			$stmt->bind_param("sssss", $first, $last, $phoneNumber, $email, $currentUserId);
+			$stmt->execute();
+			$stmt->close();
+			returnWithError("");
+		}
+	}
 
 	// Close MySQL connection and return
 	$conn->close();
-	returnWithError("");
 
 	function getRequestInfo()
 	{
