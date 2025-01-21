@@ -50,17 +50,21 @@
 			}
 			else
 			{
+				// TODO:
+				// Change or remove these error messages in the future
 				returnWithError("User that was just added isn't appearing in our database... weird");
 			}
 		}
 		else
 		{
+			// TODO:
+			// Change or remove these error messages in the future
 			returnWithError("Oh no...... it didn't work");
 		}
-
 		$registerUserStatement->close();
 	}
 
+	// Close statements and end connection
 	$checkUserStatement->close();
 	$conn->close();
 

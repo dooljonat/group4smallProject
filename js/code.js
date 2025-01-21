@@ -41,12 +41,13 @@ function doLogin()
 					return;
 				}
 		
+				// Save current user information to browser coookies
 				firstName = jsonObject.firstName;
 				lastName = jsonObject.lastName;
-
 				saveCookie();
 	
-				window.location.href = "color.html";
+				// Redirect to contacts page
+				window.location.href = "contacts.html";
 			}
 		};
 		xhr.send(jsonPayload);
@@ -61,20 +62,24 @@ function doRegister()
 {
 	console.log("Attempting to register a new user...");
 	
+	// Get user information from HTML forms
 	let first = document.getElementById("firstName").value;
 	let last  = document.getElementById("lastName").value;
 	let login = document.getElementById("loginName").value;
 	let password = document.getElementById("loginPassword").value;
-//	var hash = md5( password );
 	
+	// Get register result element (for error messages)
 	document.getElementById("registerResult").innerHTML = "";
 
+	// Create JSON payload
 	let tmp = {first:first, last:last, login:login, password:password};
 //	var tmp = {login:login,password:hash};
 	let jsonPayload = JSON.stringify( tmp );
 	
+	// Get URL for Register.php API
 	let url = urlBase + '/Register.' + extension;
 
+	// Send request to API to create new user
 	let xhr = new XMLHttpRequest();
 	xhr.open("POST", url, true);
 	xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
@@ -91,12 +96,15 @@ function doRegister()
 
 				console.log(userId);
 		
+				// If the response returns an invalid userId,
+				//  display the error in registerResult
 				if( userId < 1 )
 				{		
 					document.getElementById("registerResult").innerHTML = jsonObject.error;
 					return;
 				}
 	
+				// Redirect to login screen
 				window.location.href = "index.html";
 			}
 		};
@@ -146,10 +154,13 @@ function addContact()
 				console.log(JSON.stringify(xhr.responseText));
 				let jsonObject = JSON.parse( xhr.responseText );
 			
+				// If there was an error while adding new contact, display it
 				if (jsonObject.error != "")
 				{
 					document.getElementById("createNewContactResult").innerHTML = jsonObject.error;
 				}
+
+				// No errors
 				else
 				{
 					document.getElementById("createNewContactResult").innerHTML = "Contact has been added";
@@ -242,7 +253,6 @@ function addColor()
 	{
 		document.getElementById("colorAddResult").innerHTML = err.message;
 	}
-	
 }
 
 function searchColor()
