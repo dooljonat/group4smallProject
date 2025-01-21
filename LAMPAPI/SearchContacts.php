@@ -15,7 +15,7 @@
     $stmt = $conn->prepare("select * from contacts where (UserID = ?) and ((? is NULL or ? = '' or FirstName like ?) and (? is null or ? = '' or LastName like ?))");
     $firstName = "%" . $inData["firstName"] . "%";
     $lastName = "%" . $inData["lastName"] . "%";
-    $stmt->bind_param("sss", $firstName, $inData["userId"]);
+    $stmt->bind_param("sss", $inData["userId"], $firstName, $lastName);
     $stmt->execute();
     
     $result = $stmt->get_result();
