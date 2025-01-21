@@ -12,7 +12,7 @@
     
     include "DatabaseConnection.php";
 
-    $stmt = $conn->prepare("select * from contacts where (UserID = ?) and ((? is NULL or ? = '' or FirstName like ?) and (? is null or ? = '' or LastName like ?))");
+    $stmt = $conn->prepare("select * from Contacts where (UserID = ?) and ((? is NULL or ? = '' or FirstName like ?) and (? is null or ? = '' or LastName like ?))");
     $firstName = "%" . $inData["firstName"] . "%";
     $lastName = "%" . $inData["lastName"] . "%";
     $stmt->bind_param("sss", $inData["userId"], $firstName, $lastName);
