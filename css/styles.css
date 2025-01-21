@@ -97,6 +97,11 @@ body
     margin-top: 2%;
 }
 
+#goHomeButton
+{
+    margin-top: 2%;
+}
+
 #searchText
 {
 	font-size: 30px;
