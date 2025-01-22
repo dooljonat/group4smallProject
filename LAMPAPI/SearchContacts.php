@@ -13,8 +13,8 @@
     include "DatabaseConnection.php";
 
     $stmt = $conn->prepare("select * from Contacts where (UserID = ?) and ((? is NULL or ? = '' or FirstName like ?) and (? is null or ? = '' or LastName like ?))");
-    $firstName = "%" . $inData["firstName"] . "%";
-    $lastName = "%" . $inData["lastName"] . "%";
+    $firstName = "%" . $inData["firstNameSearch"] . "%";
+    $lastName = "%" . $inData["lastNameSearch"] . "%";
     $stmt->bind_param("sssssss", $inData["userId"], $firstName, $firstName, $firstName, $lastName, $lastName, $lastName);
     $stmt->execute();
     
