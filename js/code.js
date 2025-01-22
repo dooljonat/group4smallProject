@@ -120,7 +120,7 @@ function addContact()
 {
 	// NOTE TO READERS: I'm not sure if handling the cookies in add_contact.html
 	// how color.html/contacts.html does it is necessary, as in,
-	// logging users out if the cookies return null,
+	// logging users out if the cookies return null,AddCon
 	// but it's probably better security and doesn't hurt for now
 
 	console.log("Attempting to add a new contact...");
@@ -289,6 +289,64 @@ function searchColor()
 				}
 				
 				document.getElementsByTagName("p")[0].innerHTML = colorList;
+			}
+		};
+		xhr.send(jsonPayload);
+	}
+	catch(err)
+	{
+		document.getElementById("colorSearchResult").innerHTML = err.message;
+	}
+}
+
+function searchContacts()
+{
+	// NOTE TO COLLABORATORS:
+	//  Only adding search by first name for now,
+	//  later add extra form to search by last name too
+	let firstNameSearch = document.getElementById("firstNameSearchText").value;
+
+	// Get contactSearchResult
+	document.getElementById("contactSearchResult").innerHTML = "";
+	
+	// Init contactList
+	let contactList = "";
+
+	// Create json object
+	let tmp = {firstNameSearch:firstNameSearch, lastNameSearch:"", userId:userId};
+	let jsonPayload = JSON.stringify( tmp );
+
+	// Get URL for search contacts API
+	let url = urlBase + '/SearchContacts.' + extension;
+	
+	// Send json object as POST request to API
+	let xhr = new XMLHttpRequest();
+	xhr.open("POST", url, true);
+	xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+	try
+	{
+		xhr.onreadystatechange = function() 
+		{
+			// If successful...
+			if (this.readyState == 4 && this.status == 200) 
+			{
+				document.getElementById("contactSearchResult").innerHTML = "Contacts(s) have been retrieved";
+				let jsonObject = JSON.parse( xhr.responseText ); // Get Response
+
+				// Iterate through response,
+				//  convert returned contact objects to string,
+				//  output it to contacts.html
+				for( let i=0; i < jsonObject.results.length; i++ )
+				{
+					contactList += "*";
+					contactList += JSON.stringify(jsonObject.results[i]);
+					if( i < jsonObject.results.length - 1 )
+					{
+						contactList += "<br />\r\n";
+					}
+				}
+				
+				document.getElementsByTagName("p")[0].innerHTML = contactList;
 			}
 		};
 		xhr.send(jsonPayload);

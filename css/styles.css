@@ -106,6 +106,12 @@ body
 {
 	font-size: 30px;
 }
+
+#firstNameSearchText
+{
+    font-size: 30px;
+}
+
 #colorText
 {
 	font-size: 30px;
@@ -177,7 +183,23 @@ select{
     display: none;
 }
 
+#contactSearchResult {
+    display: none;
+}
+
 #colorAddResult{
+    display: inline-block;
+    font-size: 0.8em;
+    width: 90%;
+    text-align: center;
+    margin-left: 5%;
+    margin-top: 2%;
+    margin-bottom: 1%;
+    font-family: 'Ubuntu', sans-serif;
+    color: #95060a;
+}
+
+#contactAddResult {
     display: inline-block;
     font-size: 0.8em;
     width: 90%;
