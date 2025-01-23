@@ -1,4 +1,4 @@
-const urlBase = 'http://localhost/LAMPAPI';
+const urlBase = 'http://cop4331-group4.me/LAMPAPI';
 const extension = 'php';
 
 let userId = 0;
@@ -41,7 +41,7 @@ function doLogin()
 					return;
 				}
 		
-				// Save current user information to browser coookies
+				// Save current user information to browser cookies
 				firstName = jsonObject.firstName;
 				lastName = jsonObject.lastName;
 				saveCookie();
@@ -308,9 +308,6 @@ function searchContacts()
 
 	// Get contactSearchResult
 	document.getElementById("contactSearchResult").innerHTML = "";
-	
-	// Init contactList
-	let contactList = "";
 
 	// Create json object
 	let tmp = {firstNameSearch:firstNameSearch, lastNameSearch:"", userId:userId};
@@ -333,20 +330,18 @@ function searchContacts()
 				document.getElementById("contactSearchResult").innerHTML = "Contacts(s) have been retrieved";
 				let jsonObject = JSON.parse( xhr.responseText ); // Get Response
 
-				// Iterate through response,
-				//  convert returned contact objects to string,
-				//  output it to contacts.html
+				// Parse results and init table
+				let contactList = jsonObject.results;
+				let contactTable = "";
+
+				// Add each contact to table
 				for( let i=0; i < jsonObject.results.length; i++ )
 				{
-					contactList += "*";
-					contactList += JSON.stringify(jsonObject.results[i]);
-					if( i < jsonObject.results.length - 1 )
-					{
-						contactList += "<br />\r\n";
-					}
+					contactTable += "<tr><td>" + contactList[i].firstName + "</td><td>" + contactList[i].lastName + "</td><td>" + contactList[i].phone + "</td><td>" + contactList[i].email + "</td></tr>";
 				}
 				
-				document.getElementsByTagName("p")[0].innerHTML = contactList;
+				// Display table
+				document.getElementById("contactList").innerHTML = contactTable;
 			}
 		};
 		xhr.send(jsonPayload);
