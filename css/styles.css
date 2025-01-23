@@ -210,3 +210,19 @@ select{
     font-family: 'Ubuntu', sans-serif;
     color: #95060a;
 }
+
+#tableHeader {
+    display: flex;
+    justify-content: center;
+}
+
+#contacts {
+    width:100%;
+    table-layout: fixed;
+    border-radius: 5px;
+}
+
+#contacts th, #contacts td {
+    padding: 10px;
+    text-align: left;
+}

@@ -29,6 +29,7 @@
             "lastName" => $row["LastName"],
             "phone" => $row["Phone"],
             "email" => $row["Email"],
+            "id" => $row["ID"],
         ];
         
         array_push($searchResults, $tempResult);
