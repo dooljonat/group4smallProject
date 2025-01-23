@@ -8,11 +8,11 @@
 
 	$inData = getRequestInfo();
 
-	$userId = $inData["userId"];
-	$id = $inData["id"];
+	$currentUserId = $inData["currentUserId"];
+	$contactId = $inData["contactId"];
 
     $stmt = $conn->prepare("delete from Contacts where (UserID = ?) and (ID = ?)");
-    $stmt->bind_param("ss", $userId, $id);
+    $stmt->bind_param("ss", $currentUserId, $contactId);
     $stmt->execute();
     $stmt->close();
 
