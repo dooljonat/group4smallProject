@@ -8,7 +8,7 @@
 
 	$inData = getRequestInfo();
     
-    $currentUserId = inData["currentUserId"];
+    $currentUserId = $inData["currentUserId"];
     $contactId = $inData["contactId"];
 	$first = $inData["first"];
 	$last = $inData["last"];
