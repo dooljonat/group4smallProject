@@ -37,7 +37,7 @@
 		// insert new contact into MySQL database
 		else
 		{
-			$stmt = $conn->prepare("update Contacts FirstName=? LastName=? Phone=? Email=? where (UserID=?) AND (ID=?)");
+			$stmt = $conn->prepare("update Contacts set FirstName=?, LastName=?, Phone=?, Email=? where (UserID=?) AND (ID=?)");
 			$stmt->bind_param("ssssss", $first, $last, $phoneNumber, $email, $currentUserId, $contactId);
 			$stmt->execute();
 			$stmt->close();
