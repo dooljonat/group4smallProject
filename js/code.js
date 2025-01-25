@@ -306,8 +306,11 @@ function searchContacts()
 	//  later add extra form to search by last name too
 	let firstNameSearch = document.getElementById("firstNameSearchText").value;
 
-	// Get contactSearchResult
-	document.getElementById("contactSearchResult").innerHTML = "";
+	// Clear old results
+    document.getElementById("contactSearchResult").innerHTML = "";
+    document.getElementById("editContactResult").innerHTML = "";
+    document.getElementById("saveContactResult").innerHTML = "";
+    document.getElementById("deleteContactResult").innerHTML = "";
 
 	// Create json object
 	let tmp = {firstNameSearch:firstNameSearch, lastNameSearch:"", userId:userId};
@@ -327,28 +330,220 @@ function searchContacts()
 			// If successful...
 			if (this.readyState == 4 && this.status == 200) 
 			{
-				document.getElementById("contactSearchResult").innerHTML = "Contacts(s) have been retrieved";
+				console.log(JSON.stringify(xhr.responseText));
 				let jsonObject = JSON.parse( xhr.responseText ); // Get Response
 
-				// Parse results and init table
-				let contactList = jsonObject.results;
-				let contactTable = "";
-
-				// Add each contact to table
-				for( let i=0; i < jsonObject.results.length; i++ )
+				// If there was an error while searching contact, display it
+				if (jsonObject.error != "")
 				{
-					contactTable += "<tr><td>" + contactList[i].firstName + "</td><td>" + contactList[i].lastName + "</td><td>" + contactList[i].phone + "</td><td>" + contactList[i].email + "</td></tr>";
+					document.getElementById("contactSearchResult").innerHTML = jsonObject.error;
 				}
-				
-				// Display table
-				document.getElementById("contactList").innerHTML = contactTable;
+
+				// No errors
+				else
+				{
+					// Parse results and init table
+					let contactList = jsonObject.results;
+					let contactTable = "";
+
+					// Add each contact to table
+					for( let i=0; i < jsonObject.results.length; i++ )
+					{
+						contactTable += `
+							<tr contactID="${contactList[i].id}">
+								<td class="firstName">${contactList[i].firstName}</td>
+								<td class="lastName">${contactList[i].lastName}</td>
+								<td class="phone">${contactList[i].phone}</td>
+								<td class="email">${contactList[i].email}</td>
+								<td>
+                                    <button type="button" onclick="editContact(${contactList[i].id});"><i class="fas fa-pencil-alt"></i></button>
+                                    <button type="button" onclick="deleteContact(${contactList[i].id});"><i class="fas fa-trash-alt"></i></button>
+                                </td>
+								</tr>
+							`;
+						        
+							// Old text buttons if icons are not allowed
+							//	<td>
+							// 		<button type="button" onclick="editContact(${contactList[i].id});">Edit</button>
+							//		<button type="button" onclick="deleteContact(${contactList[i].id});">Delete</button>
+							// 	</td>
+					}
+					
+					// Display table
+					document.getElementById("contactList").innerHTML = contactTable;
+
+					document.getElementById("contactSearchResult").innerHTML = "Contacts(s) have been retrieved";
+				}
 			}
 		};
 		xhr.send(jsonPayload);
 	}
 	catch(err)
 	{
-		document.getElementById("colorSearchResult").innerHTML = err.message;
+		document.getElementById("contactSearchResult").innerHTML = err.message;
 	}
 	
+}
+
+function editContact(contactID){
+	// Clear old results
+    document.getElementById("contactSearchResult").innerHTML = "";
+    document.getElementById("editContactResult").innerHTML = "";
+    document.getElementById("saveContactResult").innerHTML = "";
+    document.getElementById("deleteContactResult").innerHTML = "";
+
+	// Open the entry
+	let row = document.querySelector("tr[contactID='" + contactID + "']");
+    if (!row) return;
+
+    // Get the current values
+    let firstName = row.querySelector(".firstName").innerText;
+    let lastName = row.querySelector(".lastName").innerText;
+    let phone = row.querySelector(".phone").innerText;
+    let email = row.querySelector(".email").innerText;
+
+	// Edit the entry
+	row.innerHTML = `
+		<td><input type="text" class="editFirstName" value="${firstName}"></td>
+        <td><input type="text" class="editLastName" value="${lastName}"></td>
+        <td><input type="text" class="editPhone" value="${phone}"></td>
+        <td><input type="text" class="editEmail" value="${email}"></td>
+		<td><button type="button" onclick="saveContact(${contactID});"><i class="fas fa-check"></i></button></td>
+	`;
+	// Old text buttons if icons are not allowed
+	//	<td><button type='button' onclick='saveContact(${contactID});'>Save</button></td>
+	}
+
+function saveContact(contactID){
+	// Clear old results
+    document.getElementById("contactSearchResult").innerHTML = "";
+    document.getElementById("editContactResult").innerHTML = "";
+    document.getElementById("saveContactResult").innerHTML = "";
+    document.getElementById("deleteContactResult").innerHTML = "";
+
+	// Open the entry
+	let row = document.querySelector("tr[contactID='" + contactID + "']");
+	if (!row) return;
+
+	// Get the new values
+	let firstName = row.querySelector(".editFirstName").value;
+    let lastName = row.querySelector(".editLastName").value;
+    let phone = row.querySelector(".editPhone").value;
+    let email = row.querySelector(".editEmail").value;
+
+	// Create JSON payload
+	let tmp = {first:firstName, last:lastName, phoneNumber:phone, email:email, currentUserId:userId, contactId:contactID};
+	let jsonPayload = JSON.stringify( tmp );
+
+	// Get URL for edit contact API
+	let url = urlBase + '/EditContact.' + extension;
+
+	// Send request to API to add new contact
+	let xhr = new XMLHttpRequest();
+	xhr.open("POST", url, true);
+	xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+	try
+	{
+		xhr.onreadystatechange = function() 
+		{
+			if (this.readyState == 4 && this.status == 200) 
+			{
+				console.log(JSON.stringify(xhr.responseText));
+				let jsonObject = JSON.parse( xhr.responseText );
+
+				// If there was an error while searching contact, display it
+				if (jsonObject.error != "")
+				{
+					document.getElementById("saveContactResult").innerHTML = jsonObject.error;
+				}
+
+				// No errors
+				else
+				{
+					row.innerHTML = `
+						<td class="firstName">${firstName}</td>
+						<td class="lastName">${lastName}</td>
+						<td class="phone">${phone}</td>
+						<td class="email">${email}</td>
+						<td>
+							<button type="button" onclick="editContact(${contactID});"><i class="fas fa-pencil-alt"></i></button>
+							<button type="button" onclick="deleteContact(${contactID});"><i class="fas fa-trash-alt"></i></button>
+						</td>
+					`;
+					// Old text buttons if icons are not allowed
+					//	<td>
+					// 		<button type="button" onclick="editContact(${contactID});">Edit</button>
+					//		<button type="button" onclick="deleteContact(${contactID});">Delete</button>
+					// 	</td>
+					
+					document.getElementById("editContactResult").innerHTML = "Contact has been saved";
+				}
+			}
+		};
+		xhr.send(jsonPayload);
+	}
+	catch(err)
+	{
+		document.getElementById("saveContactResult").innerHTML = err.message;
+	}
+}
+
+function deleteContact(contactID){
+	// Open the entry so we can remove it
+	let row = document.querySelector("tr[contactID='" + contactID + "']");
+	if (!row) return;
+
+	let firstName = row.querySelector(".firstName").innerText;
+    let lastName = row.querySelector(".lastName").innerText;
+
+	// Confirm deletion with user
+    if (!confirm("Are you sure you want to delete " + firstName + " " + lastName + " as a contact?")) {
+        return;
+    }
+
+	// Clear old results
+    document.getElementById("contactSearchResult").innerHTML = "";
+    document.getElementById("editContactResult").innerHTML = "";
+    document.getElementById("saveContactResult").innerHTML = "";
+    document.getElementById("deleteContactResult").innerHTML = "";
+
+
+	// Create JSON payload
+	let tmp = {currentUserId:userId, contactId:contactID};
+	let jsonPayload = JSON.stringify( tmp );
+
+	// Get URL for edit contact API
+	let url = urlBase + '/DeleteContact.' + extension;
+
+	// Send request to API to add new contact
+	let xhr = new XMLHttpRequest();
+	xhr.open("POST", url, true);
+	xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+	try
+	{
+		xhr.onreadystatechange = function() 
+		{
+			if (this.readyState == 4 && this.status == 200) 
+			{
+				console.log(JSON.stringify(xhr.responseText));
+				let jsonObject = JSON.parse( xhr.responseText );
+
+				// If there was an error while saving contact, display it
+				if (jsonObject.error != "")
+				{
+					document.getElementById("deleteContactResult").innerHTML = jsonObject.error;
+				}
+				else
+				{
+					row.remove();
+					document.getElementById("deleteContactResult").innerHTML = "Contact " + firstName + " " + lastName + " has been deleted";
+				}
+			}
+		};
+		xhr.send(jsonPayload);
+	}
+	catch(err)
+	{
+		document.getElementById("deleteContactResult").innerHTML = err.message;
+	}
 }
