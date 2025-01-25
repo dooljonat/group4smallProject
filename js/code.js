@@ -306,8 +306,11 @@ function searchContacts()
 	//  later add extra form to search by last name too
 	let firstNameSearch = document.getElementById("firstNameSearchText").value;
 
-	// Get contactSearchResult
-	document.getElementById("contactSearchResult").innerHTML = "";
+	// Clear old results
+    document.getElementById("contactSearchResult").innerHTML = "";
+    document.getElementById("editContactResult").innerHTML = "";
+    document.getElementById("saveContactResult").innerHTML = "";
+    document.getElementById("deleteContactResult").innerHTML = "";
 
 	// Create json object
 	let tmp = {firstNameSearch:firstNameSearch, lastNameSearch:"", userId:userId};
@@ -352,10 +355,18 @@ function searchContacts()
 								<td class="lastName">${contactList[i].lastName}</td>
 								<td class="phone">${contactList[i].phone}</td>
 								<td class="email">${contactList[i].email}</td>
-								<td><button type="button" onclick="editContact(${contactList[i].id});">Edit</button></td>
-								<td><button type="button" onclick="deleteContact(${contactList[i].id});">Delete</button></td>
-							</tr>
-						`;
+								<td>
+                                    <button type="button" onclick="editContact(${contactList[i].id});"><i class="fas fa-pencil-alt"></i></button>
+                                    <button type="button" onclick="deleteContact(${contactList[i].id});"><i class="fas fa-trash-alt"></i></button>
+                                </td>
+								</tr>
+							`;
+						        
+							// Old text buttons if icons are not allowed
+							//	<td>
+							// 		<button type="button" onclick="editContact(${contactList[i].id});">Edit</button>
+							//		<button type="button" onclick="deleteContact(${contactList[i].id});">Delete</button>
+							// 	</td>
 					}
 					
 					// Display table
@@ -375,6 +386,12 @@ function searchContacts()
 }
 
 function editContact(contactID){
+	// Clear old results
+    document.getElementById("contactSearchResult").innerHTML = "";
+    document.getElementById("editContactResult").innerHTML = "";
+    document.getElementById("saveContactResult").innerHTML = "";
+    document.getElementById("deleteContactResult").innerHTML = "";
+
 	// Open the entry
 	let row = document.querySelector("tr[contactID='" + contactID + "']");
     if (!row) return;
@@ -391,13 +408,18 @@ function editContact(contactID){
         <td><input type="text" class="editLastName" value="${lastName}"></td>
         <td><input type="text" class="editPhone" value="${phone}"></td>
         <td><input type="text" class="editEmail" value="${email}"></td>
-        <td><button type='button' onclick='saveContact(${contactID});'>Save</button></td>
+		<td><button type="button" onclick="saveContact(${contactID});"><i class="fas fa-check"></i></button></td>
 	`;
-}
+	// Old text buttons if icons are not allowed
+	//	<td><button type='button' onclick='saveContact(${contactID});'>Save</button></td>
+	}
 
 function saveContact(contactID){
-	// Get editContactResult
-	document.getElementById("editContactResult").innerHTML = "";
+	// Clear old results
+    document.getElementById("contactSearchResult").innerHTML = "";
+    document.getElementById("editContactResult").innerHTML = "";
+    document.getElementById("saveContactResult").innerHTML = "";
+    document.getElementById("deleteContactResult").innerHTML = "";
 
 	// Open the entry
 	let row = document.querySelector("tr[contactID='" + contactID + "']");
@@ -439,12 +461,20 @@ function saveContact(contactID){
 				else
 				{
 					row.innerHTML = `
-					<td class="firstName">${firstName}</td>
-					<td class="lastName">${lastName}</td>
-					<td class="phone">${phone}</td>
-					<td class="email">${email}</td>
-					<td><button type="button" onclick="editContact(${contactID});">Edit</button></td>
+						<td class="firstName">${firstName}</td>
+						<td class="lastName">${lastName}</td>
+						<td class="phone">${phone}</td>
+						<td class="email">${email}</td>
+						<td>
+							<button type="button" onclick="editContact(${contactID});"><i class="fas fa-pencil-alt"></i></button>
+							<button type="button" onclick="deleteContact(${contactID});"><i class="fas fa-trash-alt"></i></button>
+						</td>
 					`;
+					// Old text buttons if icons are not allowed
+					//	<td>
+					// 		<button type="button" onclick="editContact(${contactID});">Edit</button>
+					//		<button type="button" onclick="deleteContact(${contactID});">Delete</button>
+					// 	</td>
 					
 					document.getElementById("editContactResult").innerHTML = "Contact has been saved";
 				}
@@ -459,12 +489,24 @@ function saveContact(contactID){
 }
 
 function deleteContact(contactID){
-	// Get deleteContactResult
-	document.getElementById("deleteContactResult").innerHTML = "";
-
 	// Open the entry so we can remove it
 	let row = document.querySelector("tr[contactID='" + contactID + "']");
 	if (!row) return;
+
+	let firstName = row.querySelector(".firstName").innerText;
+    let lastName = row.querySelector(".lastName").innerText;
+
+	// Confirm deletion with user
+    if (!confirm("Are you sure you want to delete " + firstName + " " + lastName + " as a contact?")) {
+        return;
+    }
+
+	// Clear old results
+    document.getElementById("contactSearchResult").innerHTML = "";
+    document.getElementById("editContactResult").innerHTML = "";
+    document.getElementById("saveContactResult").innerHTML = "";
+    document.getElementById("deleteContactResult").innerHTML = "";
+
 
 	// Create JSON payload
 	let tmp = {currentUserId:userId, contactId:contactID};
@@ -494,7 +536,7 @@ function deleteContact(contactID){
 				else
 				{
 					row.remove();
-					document.getElementById("deleteContactResult").innerHTML = "Contact has been deleted";
+					document.getElementById("deleteContactResult").innerHTML = "Contact " + firstName + " " + lastName + " has been deleted";
 				}
 			}
 		};

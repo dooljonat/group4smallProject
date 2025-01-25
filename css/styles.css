@@ -226,3 +226,9 @@ select{
     padding: 10px;
     text-align: left;
 }
+
+#contacts th:last-child,
+#contacts td:last-child {
+    width:6%;
+    white-space: nowrap;
+}
