@@ -4,18 +4,36 @@
 	ini_set("log_errors", 1); 	
 	ini_set("error_log", "/tmp/php-error.log");
 
-	$inData = getRequestInfo();
+    $inData = getRequestInfo();
     
     $tempResult = array();
 	$searchResults = array();
     $searchCount = 0;
-    
-    include "DatabaseConnection.php";
 
-    $stmt = $conn->prepare("select * from Contacts where (UserID = ?) and ((? is NULL or ? = '' or FirstName like ?) and (? is null or ? = '' or LastName like ?))");
-    $firstName = "%" . $inData["firstNameSearch"] . "%";
-    $lastName = "%" . $inData["lastNameSearch"] . "%";
-    $stmt->bind_param("sssssss", $inData["userId"], $firstName, $firstName, $firstName, $lastName, $lastName, $lastName);
+    include "DatabaseConnection.php";
+    
+    $search = $inData["search"];
+    $wildSearch = '%' . $search . '%';
+
+    $words = array_filter(explode(' ', $search));
+    
+    $query = "SELECT * FROM Contacts WHERE (FirstName LIKE ?
+        OR LastName LIKE ? OR Phone LIKE ? OR Email LIKE ?)";
+    
+    if (count($words) > 1) {
+        $query .= " OR (FirstName LIKE ? AND LastName LIKE ?)";
+    }
+
+    $stmt = $conn->prepare($query);
+    
+    if (count($words) > 1) {
+        $word1 = '%' . $words[0] . '%';
+        $word2 = '%' . $words[1] . '%';
+        $stmt->bind_param("ssssss", $wildSearch, $wildSearch, $wildSearch, $wildSearch, $word1, $word2);
+    } else {
+        $stmt->bind_param("ssss", $wildSearch, $wildSearch, $wildSearch, $wildSearch);
+    }
+
     $stmt->execute();
     
     $result = $stmt->get_result();
