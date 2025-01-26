@@ -301,10 +301,7 @@ function searchColor()
 
 function searchContacts()
 {
-	// NOTE TO COLLABORATORS:
-	//  Only adding search by first name for now,
-	//  later add extra form to search by last name too
-	let firstNameSearch = document.getElementById("firstNameSearchText").value;
+	let search = document.getElementById("searchText").value;
 
 	// Clear old results
     document.getElementById("contactSearchResult").innerHTML = "";
@@ -313,7 +310,7 @@ function searchContacts()
     document.getElementById("deleteContactResult").innerHTML = "";
 
 	// Create json object
-	let tmp = {firstNameSearch:firstNameSearch, lastNameSearch:"", userId:userId};
+	let tmp = {search:search, currentUserId:userId};
 	let jsonPayload = JSON.stringify( tmp );
 
 	// Get URL for search contacts API
