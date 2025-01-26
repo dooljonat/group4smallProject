@@ -12,12 +12,13 @@
 
     include "DatabaseConnection.php";
     
+    $currentUserId = $inData["currentUserId"];
     $search = $inData["search"];
     $wildSearch = '%' . $search . '%';
 
     $words = array_filter(explode(' ', $search));
     
-    $query = "SELECT * FROM Contacts WHERE (FirstName LIKE ?
+    $query = "SELECT * FROM Contacts WHERE (UserID = ?) AND (FirstName LIKE ?
         OR LastName LIKE ? OR Phone LIKE ? OR Email LIKE ?)";
     
     if (count($words) > 1) {
@@ -29,9 +30,9 @@
     if (count($words) > 1) {
         $word1 = '%' . $words[0] . '%';
         $word2 = '%' . $words[1] . '%';
-        $stmt->bind_param("ssssss", $wildSearch, $wildSearch, $wildSearch, $wildSearch, $word1, $word2);
+        $stmt->bind_param("sssssss", $currentUserId, $wildSearch, $wildSearch, $wildSearch, $wildSearch, $word1, $word2);
     } else {
-        $stmt->bind_param("ssss", $wildSearch, $wildSearch, $wildSearch, $wildSearch);
+        $stmt->bind_param("sssss", $currentUserId, $wildSearch, $wildSearch, $wildSearch, $wildSearch);
     }
 
     $stmt->execute();
