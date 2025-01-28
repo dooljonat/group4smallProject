@@ -232,3 +232,19 @@ select{
     width:6%;
     white-space: nowrap;
 }
+
+body {
+    margin: 0;
+    overflow: hidden;
+    background: black;
+    color: #0000ff;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+canvas {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+}

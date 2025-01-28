@@ -225,80 +225,6 @@ function doLogout()
 	window.location.href = "index.html";
 }
 
-function addColor()
-{
-	let newColor = document.getElementById("colorText").value;
-	document.getElementById("colorAddResult").innerHTML = "";
-
-	let tmp = {color:newColor,userId,userId};
-	let jsonPayload = JSON.stringify( tmp );
-
-	let url = urlBase + '/AddColor.' + extension;
-	
-	let xhr = new XMLHttpRequest();
-	xhr.open("POST", url, true);
-	xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
-	try
-	{
-		xhr.onreadystatechange = function() 
-		{
-			if (this.readyState == 4 && this.status == 200) 
-			{
-				document.getElementById("colorAddResult").innerHTML = "Color has been added";
-			}
-		};
-		xhr.send(jsonPayload);
-	}
-	catch(err)
-	{
-		document.getElementById("colorAddResult").innerHTML = err.message;
-	}
-}
-
-function searchColor()
-{
-	let srch = document.getElementById("searchText").value;
-	document.getElementById("colorSearchResult").innerHTML = "";
-	
-	let colorList = "";
-
-	let tmp = {search:srch,userId:userId};
-	let jsonPayload = JSON.stringify( tmp );
-
-	let url = urlBase + '/SearchColors.' + extension;
-	
-	let xhr = new XMLHttpRequest();
-	xhr.open("POST", url, true);
-	xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
-	try
-	{
-		xhr.onreadystatechange = function() 
-		{
-			if (this.readyState == 4 && this.status == 200) 
-			{
-				document.getElementById("colorSearchResult").innerHTML = "Color(s) has been retrieved";
-				let jsonObject = JSON.parse( xhr.responseText );
-				
-				for( let i=0; i<jsonObject.results.length; i++ )
-				{
-					colorList += jsonObject.results[i];
-					if( i < jsonObject.results.length - 1 )
-					{
-						colorList += "<br />\r\n";
-					}
-				}
-				
-				document.getElementsByTagName("p")[0].innerHTML = colorList;
-			}
-		};
-		xhr.send(jsonPayload);
-	}
-	catch(err)
-	{
-		document.getElementById("colorSearchResult").innerHTML = err.message;
-	}
-}
-
 function searchContacts()
 {
 	let search = document.getElementById("searchText").value;
@@ -544,3 +470,48 @@ function deleteContact(contactID){
 		document.getElementById("deleteContactResult").innerHTML = err.message;
 	}
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+    // Init the canvas
+    let canvas = document.createElement('canvas');
+    let ctx = canvas.getContext('2d');
+    document.body.appendChild(canvas);
+
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    let letterSize = 10;
+    let numColumns = canvas.width / letterSize;
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+
+    // Create an array of random y positions for each column
+    let yPositions = Array.from({ length: numColumns }, () => Math.random() * canvas.height);
+
+    function draw() {
+        // Use overlayed black rectangles to fade the old letters
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        // Set the font style for the letters
+        ctx.fillStyle = '#0000ff';
+
+        // Draw in the canvas
+        for (let i = 0; i < numColumns; i++){
+            // Calculate the random letter to be placed and put it on the canvas
+            let letter = characters[Math.floor(Math.random() * characters.length)];
+            ctx.fillText(letter, i * letterSize, yPositions[i]);
+
+            // Move the letter down, resetting to the top if it reaches the bottom
+            yPositions[i] = yPositions[i] > canvas.height ? 0 : yPositions[i] + letterSize;
+        }
+    }
+
+    // Update the fram every 20ms
+    setInterval(draw, 20);
+
+    // Resize the canvas when the window is resized
+    window.addEventListener('resize', () => {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    });
+});
