@@ -544,3 +544,48 @@ function deleteContact(contactID){
 		document.getElementById("deleteContactResult").innerHTML = err.message;
 	}
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+    // Init the canvas
+    let canvas = document.createElement('canvas');
+    let ctx = canvas.getContext('2d');
+    document.body.appendChild(canvas);
+
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    let letterSize = 10;
+    let numColumns = canvas.width / letterSize;
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+
+    // Create an array of random y positions for each column
+    let yPositions = Array.from({ length: numColumns }, () => Math.random() * canvas.height);
+
+    function draw() {
+        // Use overlayed black rectangles to fade the old letters
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        // Set the font style for the letters
+        ctx.fillStyle = '#0000ff';
+
+        // Draw in the canvas
+        for (let i = 0; i < numColumns; i++){
+            // Calculate the random letter to be placed and put it on the canvas
+            let letter = characters[Math.floor(Math.random() * characters.length)];
+            ctx.fillText(letter, i * letterSize, yPositions[i]);
+
+            // Move the letter down, resetting to the top if it reaches the bottom
+            yPositions[i] = yPositions[i] > canvas.height ? 0 : yPositions[i] + letterSize;
+        }
+    }
+
+    // Update the fram every 20ms
+    setInterval(draw, 20);
+
+    // Resize the canvas when the window is resized
+    window.addEventListener('resize', () => {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    });
+});
