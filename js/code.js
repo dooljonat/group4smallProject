@@ -493,7 +493,7 @@ document.addEventListener('DOMContentLoaded', () => {
         ctx.fillRect(0, 0, canvas.width, canvas.height);
 
         // Set the font style for the letters
-        ctx.fillStyle = '#0000ff';
+        ctx.fillStyle = '#3e96a1';
 
         // Draw in the canvas
         for (let i = 0; i < numColumns; i++){
