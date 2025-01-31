@@ -219,17 +219,22 @@ select{
 #contacts {
     width:100%;
     table-layout: fixed;
-    border-radius: 5px;
+    border-radius: 20px;
 }
 
-#contacts th, #contacts td {
+#contacts th{
+    padding: 10px;
+    text-align: center;
+}
+
+#contacts td {
     padding: 10px;
     text-align: left;
 }
 
 #contacts th:last-child,
 #contacts td:last-child {
-    width:6%;
+    width:3.6%;
     white-space: nowrap;
 }
 

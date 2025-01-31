@@ -279,8 +279,8 @@ function searchContacts()
 								<td class="phone">${contactList[i].phone}</td>
 								<td class="email">${contactList[i].email}</td>
 								<td>
-                                    <button type="button" onclick="editContact(${contactList[i].id});"><i class="fas fa-pencil-alt"></i></button>
-                                    <button type="button" onclick="deleteContact(${contactList[i].id});"><i class="fas fa-trash-alt"></i></button>
+                                    <button type="button" class="icon-button" onclick="editContact(${contactList[i].id});"><i class="fas fa-pencil-alt"></i></button>
+                                    <button type="button" class="icon-button" onclick="deleteContact(${contactList[i].id});"><i class="fas fa-trash-alt"></i></button>
                                 </td>
 								</tr>
 							`;
@@ -331,7 +331,7 @@ function editContact(contactID){
         <td><input type="text" class="editLastName" value="${lastName}"></td>
         <td><input type="text" class="editPhone" value="${phone}"></td>
         <td><input type="text" class="editEmail" value="${email}"></td>
-		<td><button type="button" onclick="saveContact(${contactID});"><i class="fas fa-check"></i></button></td>
+		<td><button type="button" class="icon-button" onclick="saveContact(${contactID});"><i class="fas fa-check"></i></button></td>
 	`;
 	// Old text buttons if icons are not allowed
 	//	<td><button type='button' onclick='saveContact(${contactID});'>Save</button></td>
@@ -389,8 +389,8 @@ function saveContact(contactID){
 						<td class="phone">${phone}</td>
 						<td class="email">${email}</td>
 						<td>
-							<button type="button" onclick="editContact(${contactID});"><i class="fas fa-pencil-alt"></i></button>
-							<button type="button" onclick="deleteContact(${contactID});"><i class="fas fa-trash-alt"></i></button>
+							<button type="button" class="icon-button" onclick="editContact(${contactID});"><i class="fas fa-pencil-alt"></i></button>
+							<button type="button" class="icon-button" onclick="deleteContact(${contactID});"><i class="fas fa-trash-alt"></i></button>
 						</td>
 					`;
 					// Old text buttons if icons are not allowed
@@ -501,8 +501,8 @@ document.addEventListener('DOMContentLoaded', () => {
             let letter = characters[Math.floor(Math.random() * characters.length)];
             ctx.fillText(letter, i * letterSize, yPositions[i]);
 
-            // Move the letter down, resetting to the top if it reaches the bottom
-            yPositions[i] = yPositions[i] > canvas.height ? 0 : yPositions[i] + letterSize;
+            // Move the letter down, resetting to the top at random when it reaches the bottom
+            yPositions[i] = yPositions[i] > canvas.height + Math.random() * 1000 ? 0 : yPositions[i] + letterSize;
         }
     }
 
