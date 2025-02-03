@@ -171,7 +171,7 @@ function addContact()
 	}
 	catch(err)
 	{
-		document.getElementById("registerResult").innerHTML = err.message;
+		document.getElementById("createNewContactResult").innerHTML = err.message;
 	}
 }
 
