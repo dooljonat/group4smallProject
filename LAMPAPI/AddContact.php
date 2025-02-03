@@ -18,7 +18,7 @@
 	$currentUserId = (int)$inData["currentUserId"];
 
 	// Ensure data is not empty
-	if ($first == "" || $last == "" || $phoneNumber == "" || $email == "")
+	if ($first == "" || $first == null || $last == "" || $last == null || $phoneNumber == "" || $phoneNumber == null || $email == "" || $phoneNumber == null)
 	{
 		returnWithError("Please ensure all forms are filled");
 	}

@@ -9,7 +9,12 @@
 	$inData = getRequestInfo();
 
 	$currentUserId = $inData["currentUserId"];
-	$contactId = $inData["contactId"];
+    $contactId = $inData["contactId"];
+
+    if ($currentUserId == null || $contactId == null) 
+    {
+        returnWithError("Invalid request, expected id values");
+    }
 
     $stmt = $conn->prepare("delete from Contacts where (UserID = ?) and (ID = ?)");
     $stmt->bind_param("ss", $currentUserId, $contactId);

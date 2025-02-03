@@ -13,19 +13,24 @@
 	// This is commented out for now because it seemed like it didn't do anything
 	// Trying uncommenting if potential issues with login
 	// $id = 0;
-	// $firstName = "";
-	// $lastName = "";
+	$login = $inData["login"];
+    $password = $inData["password"];
+
+    if ($login == "" || $login == null || $password == "" || $password == null)
+    {
+        returnWithError("All fields must be filled to sign in.");
+    }
 
 	// Get user from database that matches Login & Password
 	$stmt = $conn->prepare("SELECT ID,firstName,lastName FROM Users WHERE Login=? AND Password =?");
-	$stmt->bind_param("ss", $inData["login"], $inData["password"]);
+	$stmt->bind_param("ss", $login, $password);
 	$stmt->execute();
 	$result = $stmt->get_result();
 
 	// Return with logged in user if successful
-	if( $row = $result->fetch_assoc()  )
+	if( $row = $result->fetch_assoc() )
 	{
-		returnWithInfo( $row['firstName'], $row['lastName'], $row['ID'] );
+		returnWithInfo($row['firstName'], $row['lastName'], $row['ID']);
 	}
 	
 	// If unsuccessful, return with error
