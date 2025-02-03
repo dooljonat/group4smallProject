@@ -220,6 +220,7 @@ select{
     width:100%;
     table-layout: fixed;
     border-radius: 20px;
+    min-width: 1000px;
 }
 
 #contacts th{
@@ -234,16 +235,22 @@ select{
 
 #contacts th:last-child,
 #contacts td:last-child {
-    width:3.6%;
+    width: 70px;
     white-space: nowrap;
 }
 
 body {
     margin: 0;
-    overflow: hidden;
     background: black;
-    color: #0000ff;
-    font-family: 'Courier New', Courier, monospace;
+    font-family: 'Lekton', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    color: #fff;
+    background-color: #000000;
+    position: relative;
+    overflow: auto;
 }
 
 canvas {
@@ -255,6 +262,6 @@ canvas {
 }
 
 .scrollableDiv {
-    overflow: scroll;
     max-height: 300px;
+    overflow: scroll;
 }

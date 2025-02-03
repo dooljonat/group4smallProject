@@ -1,4 +1,4 @@
-const urlBase = 'http://localhost/LAMPAPI';
+const urlBase = 'http://cop4331-group4.me/LAMPAPI';
 const extension = 'php';
 
 let userId = 0;
@@ -478,7 +478,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.body.appendChild(canvas);
 
     canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+    canvas.height = window.innerHeight + 200;
 
     let letterSize = 10;
     let numColumns = canvas.width / letterSize;
@@ -489,7 +489,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function draw() {
         // Use overlayed black rectangles to fade the old letters
-        ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.25)';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
 
         // Set the font style for the letters
@@ -505,9 +505,8 @@ document.addEventListener('DOMContentLoaded', () => {
             yPositions[i] = yPositions[i] > canvas.height + Math.random() * 1000 ? 0 : yPositions[i] + letterSize;
         }
     }
-
-    // Update the fram every 20ms
-    setInterval(draw, 20);
+5    // Update the frame every 40ms
+    setInterval(draw, 40);
 
     // Resize the canvas when the window is resized
     window.addEventListener('resize', () => {
