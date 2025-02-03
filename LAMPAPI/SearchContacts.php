@@ -80,12 +80,14 @@
     function returnWithError( $err )
     {
         $retValue = '{"id":0,"results":[],"error":"' . $err . '"}';
+        http_response_code(400); 
         sendResultInfoAsJson( $retValue );
     }
 
     function returnWithInfo( $searchResults )
     {
         $retValue = '{"results":' . json_encode($searchResults) . ',"error":""}';
+        http_response_code(200);
         sendResultInfoAsJson( $retValue );
     }
 ?>

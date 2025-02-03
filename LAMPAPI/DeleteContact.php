@@ -16,7 +16,7 @@
     $stmt->execute();
     $stmt->close();
 
-    returnWithError("");
+    returnWithSuccess();
 
 	// Close MySQL connection and return
 	$conn->close();
@@ -34,8 +34,15 @@
 	
 	function returnWithError( $err )
 	{
-		$retValue = '{"error":"' . $err . '"}';
+        $retValue = '{"error":"' . $err . '"}';
+        http_response_code(400);
 		sendResultInfoAsJson( $retValue );
 	}
-	
+
+    function returnWithSuccess()
+	{
+        $retValue = '{"error":""}';
+        http_response_code(200);
+		sendResultInfoAsJson( $retValue );
+	}
 ?>
