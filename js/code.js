@@ -1,4 +1,4 @@
-const urlBase = 'http://cop4331-group4.me/LAMPAPI';
+//const urlBase = 'http://cop4331-group4.me/LAMPAPI';
 const extension = 'php';
 
 let userId = 0;
@@ -514,3 +514,33 @@ document.addEventListener('DOMContentLoaded', () => {
         canvas.height = window.innerHeight;
     });
 });
+
+function togglePasswordVisibility() {
+	let passwordField = document.getElementById('loginPassword');
+	let toggleIcon = document.querySelector('.toggle-password');
+	if (passwordField.type === 'password') {
+		passwordField.type = 'text';
+		toggleIcon.classList.remove('fa-eye-slash');
+		toggleIcon.classList.add('fa-eye');
+	} else {
+		passwordField.type = 'password';
+		toggleIcon.classList.remove('fa-eye');
+		toggleIcon.classList.add('fa-eye-slash');
+	}
+}
+
+function validatePassword() {
+	let passwordInput = document.getElementById('loginPassword');
+	let passwordValidation = document.getElementById('passwordValidation');
+	let password = passwordInput.value;
+	let pattern = /^(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+
+	if (!pattern.test(password)) {
+	  	document.getElementById('passwordValidation').innerHTML = "Password must be at least 8 characters long. Password must contain at least one number and one special character.";
+	  	return false;
+	} 
+	else {
+		doRegister();
+	  	return true; // Allow form submission
+	}
+  }

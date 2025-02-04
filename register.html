@@ -11,6 +11,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Lekton:wght@300;400;700&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Jaro:wght@300;400;700&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Kodchasan:wght@300;400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
   <style>
     * {
@@ -81,6 +82,7 @@
       margin-bottom: 20px;
       display: flex;
       justify-content: space-between;
+      position: relative;
     }
 
     .input-group label {
@@ -97,7 +99,17 @@
       padding: 10px;
       width: 500px;
       height: 50px;
+      box-sizing: border-box;
       flex: 2;
+    }
+
+    .toggle-password {
+      position: absolute;
+      right: 20px;
+      top: 40%;
+      transform: translateY(-50%);
+      cursor: pointer;
+      color: rgb(62, 150, 161);
     }
 
     ::placeholder
@@ -185,12 +197,14 @@
       <div class="input-group">
         <label for="loginPassword">Password</label>
         <input type="password" id="loginPassword" name="loginPassword" placeholder="Password" required><br />
+        <i class="fas fa-eye-slash toggle-password" onclick="togglePasswordVisibility()"></i>
       </div>
-      
+      <span id="passwordValidation"></span> <br />
+      <br />
       <label id="buttonLabel">Have an account?</label>
       <div class="button-container">
         <button type="submit" id="loginButton" class="submit-btn" onclick="window.location='index.html';">Back to Login</button>
-        <button type="submit" id="registerButton" class="submit-btn" onclick="doRegister()">Register</button>
+        <button type="submit" id="registerButton" class="submit-btn" onclick="validatePassword()">Register</button>
       </div>
     <span id="registerResult"></span>
     </div>
