@@ -478,7 +478,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.body.appendChild(canvas);
 
     canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+    canvas.height = window.innerHeight + 200;
 
     let letterSize = 10;
     let numColumns = canvas.width / letterSize;
@@ -489,7 +489,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function draw() {
         // Use overlayed black rectangles to fade the old letters
-        ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.25)';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
 
         // Set the font style for the letters
@@ -505,9 +505,8 @@ document.addEventListener('DOMContentLoaded', () => {
             yPositions[i] = yPositions[i] > canvas.height + Math.random() * 1000 ? 0 : yPositions[i] + letterSize;
         }
     }
-
-    // Update the fram every 20ms
-    setInterval(draw, 20);
+5    // Update the frame every 40ms
+    setInterval(draw, 40);
 
     // Resize the canvas when the window is resized
     window.addEventListener('resize', () => {
@@ -515,3 +514,33 @@ document.addEventListener('DOMContentLoaded', () => {
         canvas.height = window.innerHeight;
     });
 });
+
+function togglePasswordVisibility() {
+	let passwordField = document.getElementById('loginPassword');
+	let toggleIcon = document.querySelector('.toggle-password');
+	if (passwordField.type === 'password') {
+		passwordField.type = 'text';
+		toggleIcon.classList.remove('fa-eye-slash');
+		toggleIcon.classList.add('fa-eye');
+	} else {
+		passwordField.type = 'password';
+		toggleIcon.classList.remove('fa-eye');
+		toggleIcon.classList.add('fa-eye-slash');
+	}
+}
+
+function validatePassword() {
+	let passwordInput = document.getElementById('loginPassword');
+	let passwordValidation = document.getElementById('passwordValidation');
+	let password = passwordInput.value;
+	let pattern = /^(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{7,}$/;
+
+	if (!pattern.test(password)) {
+	  	document.getElementById('passwordValidation').innerHTML = "Password must be at least 8 characters long. Password must contain at least one number and one special character.";
+	  	return false;
+	} 
+	else {
+		doRegister();
+	  	return true; // Allow form submission
+	}
+  }
