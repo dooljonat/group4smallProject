@@ -16,7 +16,7 @@
     $email = $inData["email"];
 
 	// Ensure data is not empty
-	if ($first == "" || $last == "" || $phoneNumber == "" || $email == "")
+	if ($currentUserId == null || $contactId == null || $first == "" || $first == null || $last == "" || $last == null || $phoneNumber == "" || $phoneNumber == null || $email == "" || $email == null)
 	{
 		returnWithError("Please ensure all forms are filled");
 	}
@@ -41,7 +41,7 @@
 			$stmt->bind_param("ssssss", $first, $last, $phoneNumber, $email, $currentUserId, $contactId);
 			$stmt->execute();
 			$stmt->close();
-			returnWithError("");
+			returnWithSuccess();
 		}
 	}
 
@@ -61,8 +61,15 @@
 	
 	function returnWithError( $err )
 	{
-		$retValue = '{"error":"' . $err . '"}';
+        $retValue = '{"error":"' . $err . '"}';
+        http_response_code(400); 
+        sendResultInfoAsJson( $retValue );
+	}
+    
+    function returnWithSuccess()
+	{
+        $retValue = '{"error":""}';
+        http_response_code(200);
 		sendResultInfoAsJson( $retValue );
 	}
-	
 ?>

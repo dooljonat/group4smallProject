@@ -30,38 +30,57 @@
 	// Attempt to create a new user and add it to the MySql database
 	else
 	{
-		// Prepare to insert new user into MySQL database
-		$registerUserStatement = $conn->prepare("INSERT INTO Users (FirstName,LastName,Login,Password) VALUES (?,?,?,?)");
-		$registerUserStatement->bind_param("ssss", $inData['first'], $inData['last'], $inData['login'], $inData['password']);
+		// Get variables from $inData
+		$newFirstName = $inData['first'];
+		$newLastName = $inData['last'];
+		$newLogin = $inData['login'];
+		$newPassword = $inData['password'];
 
-		// Execute insertion
-		if ($registerUserStatement->execute())
+		// Validate input
+		if ($newFirstName == null || $newFirstName == "" || 
+			 $newLastName == null || $newLastName == "" ||
+			 $newLogin == null || $newLogin == "" ||
+			 $newPassword == null || $newPassword == "")
 		{
-			// Get newly added user from DB
-			$fetchUserStatement = $conn->prepare("SELECT ID,firstName,lastName FROM Users WHERE Login=?");
-			$fetchUserStatement->bind_param("s", $inData["login"]);
-			$fetchUserStatement->execute();
-			$result = $fetchUserStatement->get_result();
+			returnWithError("All forms must be filled.");
+		}
 
-			// If returned user has data (NOTE: it should)
-			if( $row = $result->fetch_assoc()  )
+		// If input is valid...
+		else
+		{
+			// Prepare to insert new user into MySQL database
+			$registerUserStatement = $conn->prepare("INSERT INTO Users (FirstName,LastName,Login,Password) VALUES (?,?,?,?)");
+			$registerUserStatement->bind_param("ssss", $inData['first'], $inData['last'], $inData['login'], $inData['password']);
+
+			// Execute insertion
+			if ($registerUserStatement->execute())
 			{
-				returnWithInfo( $row['firstName'], $row['lastName'], $row['ID'] );
+				// Get newly added user from DB
+				$fetchUserStatement = $conn->prepare("SELECT ID,firstName,lastName FROM Users WHERE Login=?");
+				$fetchUserStatement->bind_param("s", $inData["login"]);
+				$fetchUserStatement->execute();
+				$result = $fetchUserStatement->get_result();
+
+				// If returned user has data (NOTE: it should)
+				if( $row = $result->fetch_assoc()  )
+				{
+					returnWithInfo( $row['firstName'], $row['lastName'], $row['ID'] );
+				}
+				else
+				{
+					// TODO:
+					// Change or remove these error messages in the future
+					returnWithError("User that was just added isn't appearing in our database... weird");
+				}
 			}
 			else
 			{
 				// TODO:
 				// Change or remove these error messages in the future
-				returnWithError("User that was just added isn't appearing in our database... weird");
+				returnWithError("Oh no...... it didn't work");
 			}
+			$registerUserStatement->close();
 		}
-		else
-		{
-			// TODO:
-			// Change or remove these error messages in the future
-			returnWithError("Oh no...... it didn't work");
-		}
-		$registerUserStatement->close();
 	}
 
 	// Close statements and end connection
@@ -81,13 +100,15 @@
 	
 	function returnWithError( $err )
 	{
-		$retValue = '{"id":0,"firstName":"","lastName":"","error":"' . $err . '"}';
+        $retValue = '{"id":0,"firstName":"","lastName":"","error":"' . $err . '"}';
+        http_response_code(400);
 		sendResultInfoAsJson( $retValue );
 	}
 	
 	function returnWithInfo( $firstName, $lastName, $id )
 	{
-		$retValue = '{"id":' . $id . ',"firstName":"' . $firstName . '","lastName":"' . $lastName . '","error":""}';
+        $retValue = '{"id":' . $id . ',"firstName":"' . $firstName . '","lastName":"' . $lastName . '","error":""}';
+        http_response_code(200);
 		sendResultInfoAsJson( $retValue );
 	}
 	

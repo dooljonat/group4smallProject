@@ -112,10 +112,10 @@ body
     font-size: 30px;
 }
 
-#colorText
+/* #colorText
 {
 	font-size: 30px;
-}
+} */
 
 input[type="text"],input[type="password"]{
     border-radius: 25px;
@@ -178,16 +178,16 @@ select{
     font-size: 0.75em;
     font-family: 'Ubuntu', sans-serif;
 }
-
+/* 
 #colorSearchResult{
     display: none;
-}
+} */
 
 #contactSearchResult {
     display: none;
 }
 
-#colorAddResult{
+/* #colorAddResult{
     display: inline-block;
     font-size: 0.8em;
     width: 90%;
@@ -197,7 +197,7 @@ select{
     margin-bottom: 1%;
     font-family: 'Ubuntu', sans-serif;
     color: #95060a;
-}
+} */
 
 #contactAddResult {
     display: inline-block;
@@ -220,6 +220,7 @@ select{
     width:100%;
     table-layout: fixed;
     border-radius: 20px;
+    min-width: 1000px;
 }
 
 #contacts th{
@@ -234,16 +235,22 @@ select{
 
 #contacts th:last-child,
 #contacts td:last-child {
-    width:3.6%;
+    width: 70px;
     white-space: nowrap;
 }
 
 body {
     margin: 0;
-    overflow: hidden;
     background: black;
-    color: #0000ff;
-    font-family: 'Courier New', Courier, monospace;
+    font-family: 'Lekton', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    color: #fff;
+    background-color: #000000;
+    position: relative;
+    overflow: auto;
 }
 
 canvas {
@@ -252,4 +259,9 @@ canvas {
     top: 0;
     left: 0;
     z-index: -1;
+}
+
+.scrollableDiv {
+    max-height: 300px;
+    overflow: scroll;
 }
