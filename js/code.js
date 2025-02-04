@@ -1,4 +1,4 @@
-//const urlBase = 'http://cop4331-group4.me/LAMPAPI';
+const urlBase = 'http://localhost/LAMPAPI';
 const extension = 'php';
 
 let userId = 0;
@@ -533,7 +533,7 @@ function validatePassword() {
 	let passwordInput = document.getElementById('loginPassword');
 	let passwordValidation = document.getElementById('passwordValidation');
 	let password = passwordInput.value;
-	let pattern = /^(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+	let pattern = /^(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{7,}$/;
 
 	if (!pattern.test(password)) {
 	  	document.getElementById('passwordValidation').innerHTML = "Password must be at least 8 characters long. Password must contain at least one number and one special character.";
