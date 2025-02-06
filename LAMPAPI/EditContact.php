@@ -62,14 +62,12 @@
 	function returnWithError( $err )
 	{
         $retValue = '{"error":"' . $err . '"}';
-        http_response_code(400); 
         sendResultInfoAsJson( $retValue );
 	}
     
     function returnWithSuccess()
 	{
         $retValue = '{"error":""}';
-        http_response_code(200);
 		sendResultInfoAsJson( $retValue );
 	}
 ?>
