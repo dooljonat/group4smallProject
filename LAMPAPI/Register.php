@@ -101,14 +101,12 @@
 	function returnWithError( $err )
 	{
         $retValue = '{"id":0,"firstName":"","lastName":"","error":"' . $err . '"}';
-        http_response_code(400);
 		sendResultInfoAsJson( $retValue );
 	}
 	
 	function returnWithInfo( $firstName, $lastName, $id )
 	{
         $retValue = '{"id":' . $id . ',"firstName":"' . $firstName . '","lastName":"' . $lastName . '","error":""}';
-        http_response_code(200);
 		sendResultInfoAsJson( $retValue );
 	}
 	
