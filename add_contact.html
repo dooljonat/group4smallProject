@@ -259,7 +259,7 @@
 	  <h2>Add a Contact</h2>
 	  <div class="form-container">
 		<div class="button-container">
-		  <button type="submit" id="logoutButton" class="submit-btn" onclick="doLogout();">Log Out</button>
+		  <button type="submit" id="logoutButton" class="submit-btn" aria-label="Log out" onclick="doLogout();">Log Out</button>
 		</div>
 	    
 		<h3>Enter contact information below:</h3>
@@ -281,8 +281,8 @@
 		  <input type="text" id="email" name="email" placeholder="example@abc.xyz"><br />
 		</div>
 		  <div class="button-container">
-	  	    <button type="submit" id="goHomeButton" class="submit-btn" onclick="window.location='contacts.html';"> Go Back </button>
-		    <button type="submit" id="createNewContactButton" class="submit-btn" onclick="addContact();">Create New Contact</button>
+	  	    <button type="submit" id="goHomeButton" class="submit-btn" aria-label="Go back" onclick="window.location='contacts.html';"> Go Back </button>
+		    <button type="submit" id="createNewContactButton" class="submit-btn" aria-label="Create Contact" onclick="addContact();">Create New Contact</button>
 	      </div>
 		  <br />
 		  <h4><span id="createNewContactResult"></span></h4>
