@@ -257,7 +257,13 @@ function searchContacts()
 				let jsonObject = JSON.parse( xhr.responseText ); // Get Response
 
 				// If there was an error while searching contact, display it
-				if (jsonObject.error != "")
+				if (jsonObject.error == "No Records Found")
+				{
+					document.getElementById("contactList").innerHTML = "";
+					document.getElementById("contactSearchResult").innerHTML = jsonObject.error;
+				}
+				
+				else if(jsonObject.error != "")
 				{
 					document.getElementById("contactSearchResult").innerHTML = jsonObject.error;
 				}
