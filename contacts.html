@@ -257,7 +257,7 @@
       font-family: 'Lekton', sans-serif;
       font-weight: 600;
       border-collapse: collapse;
-      background-color: rgba(255, 255, 255, 0.5);
+      background-color: rgba(255, 255, 255, 0.8);
       border-radius: 15px;
       border: 5px solid white;
       border-radius: 20px;
@@ -273,12 +273,12 @@
     .table th {
         background-color: rgba(255, 255, 255, 0.5);
         font-weight: 1000;
-        font-size: 25px;
+        font-size: 30px;
         text-align: center;
     }
 
     .table td {
-        font-weight: 1000;
+        font-weight: 1500;
         font-size: 20px;
         text-align: left;
     }
@@ -334,7 +334,7 @@
 	  <h2>Contacts</h2>
 	  <div class="form-container">
 		  <div class="button-container">
-		    <button type="submit" id="logoutButton" class="submit-btn" onclick="doLogout();">Log Out</button>
+		    <button type="submit" id="logoutButton" class="submit-btn" aria-label="Log out" onclick="doLogout();">Log Out</button>
 		  </div>
 	      
 		  <h3><span id="userName"></span></h3>
@@ -343,7 +343,7 @@
   
 		  <div class="input-group-search">
 		    <input type="text" id="searchText" name="searchQuery" placeholder="Search Your Contacts">
-		    <button type="submit" id="searchContactButton" onclick="searchContacts();">Search</button><br />
+		    <button type="submit" id="searchContactButton" aria-label="Search contacts" onclick="searchContacts();">Search</button><br />
 		  </div>
   
 		  <span id="contactSearchResult"></span>
@@ -371,7 +371,7 @@
 		  <br />
   
 		  <div class="button-container">
-		    <button type="submit" id="addContactButton" class="submit-btn" onclick="window.location='add_contact.html';">Add a New Contact</button><br />
+		    <button type="submit" id="addContactButton" aria-label="Add a contact" class="submit-btn" onclick="window.location='add_contact.html';">Add a New Contact</button><br />
 		  </div>
   
 		  <span id="contactAddResult"></span>
