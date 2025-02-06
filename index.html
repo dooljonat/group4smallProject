@@ -5,13 +5,23 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Login</title>
 
-  <script type="text/javascript" src="js/md5.js"></script>
-  <script type="text/javascript" src="js/code.js"></script>
+  <link rel="preload" href="images/transparent-circle.webp" as="image">
+
+  <script type="text/javascript" src="js/md5.js" defer></script>
+  <script type="text/javascript" src="js/code.js" defer></script>
   <link href="css/styles.css" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Lekton:wght@300;400;700&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Jaro:wght@300;400;700&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Kodchasan:wght@300;400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+  
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Lekton:wght@300;400;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Lekton:wght@300;400;700&display=swap" rel="stylesheet"></noscript>
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Jaro:wght@300;400;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Jaro:wght@300;400;700&display=swap" rel="stylesheet"></noscript>
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Kodchasan:wght@300;400;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Kodchasan:wght@300;400;700&display=swap" rel="stylesheet"></noscript>
+
+  <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"></noscript>
+
 
   <style>
     * {
@@ -20,21 +30,20 @@
       box-sizing: border-box;
     }
 
-  .background-image {
-    position: absolute;
-    top: 40px;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-image: url('images/transparent-circle.webp');
-    background-repeat: no-repeat;
-    background-size: contain;
-    background-position: center;
-    z-index: 1;
-  }
+    .background-image {
+      position: absolute;
+      top: 40px;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url('images/transparent-circle.webp');
+      background-repeat: no-repeat;
+      background-size: contain;
+      background-position: center;
+      z-index: 1;
+    }
 
-  .container 
-	{
+    .container {
       display: flex;
       justify-content: center;
       align-items: center;
@@ -45,10 +54,9 @@
       z-index: 2;
       overflow: auto;
       min-width: 700px;
-  }
+    }
 
-  .form-container 
-	{
+    .form-container {
       background-color: rgba(85, 199, 212, 0.75);
       padding: 40px;
       border-radius: 50px;
@@ -56,56 +64,53 @@
       width: 100%;
       max-width: 800px;
       overflow: auto;
+    }
 
-  }
-
-  h2 
-	{
-	  font-family: 'Jaro';
-      font-size:48px;
+    h2 {
+      font-family: 'Jaro';
+      font-size: 48px;
       color: #fff;
       text-align: center;
       margin-bottom: 20px;
-  }
+    }
 
-  label 
-	{
-		font-family: "Lekton";
-		font-weight: 700;
-		text-align: left;
-		color: #ffffff;
-		font-size: 30px;
-		letter-spacing: 0;
-		line-height: normal;
-		white-space: nowrap;
-  }
+    label {
+      font-family: "Lekton";
+      font-weight: 700;
+      text-align: left;
+      color: #ffffff;
+      font-size: 30px;
+      letter-spacing: 0;
+      line-height: normal;
+      white-space: nowrap;
+    }
 
-  .input-group {
-    margin-bottom: 20px;
-    display: flex;
-	  justify-content: space-between;
-    position: relative;
-  }
+    .input-group {
+      margin-bottom: 20px;
+      display: flex;
+      justify-content: space-between;
+      position: relative;
+    }
 
-	.input-group label {
-		text-align: left;
-    font-family: 'Lekton', sans-serif;
-    font-weight: 600;
-		flex: 1;
-  }
+    .input-group label {
+      text-align: left;
+      font-family: 'Lekton', sans-serif;
+      font-weight: 600;
+      flex: 1;
+    }
 
-  .input-group input {
-	  color: rgb(62, 150, 161);
-	  font-family: 'Lekton';
-	  font-weight: 700;
-    padding: 10px;
-	  width: 500px;
-	  height: 50px;
-    box-sizing: border-box;
-	  flex: 2;
-  }
+    .input-group input {
+      color: rgb(62, 150, 161);
+      font-family: 'Lekton';
+      font-weight: 700;
+      padding: 10px;
+      width: 500px;
+      height: 50px;
+      box-sizing: border-box;
+      flex: 2;
+    }
 
-  .toggle-password {
+    .toggle-password {
       position: absolute;
       right: 20px;
       top: 40%;
@@ -114,65 +119,59 @@
       color: rgb(62, 150, 161);
     }
 
-	::placeholder
-	{
-		color: rgb(179, 179, 179);
-		font-weight: 200;
-	}
+    ::placeholder {
+      color: rgb(179, 179, 179);
+      font-weight: 200;
+    }
 
-	#loginPassword
-    {
+    #loginPassword {
       font-weight: 700;
     }
 
-	#buttonLabel
-	{
-		font-family: Kodchasan;
-		font-size: 20px;
-		margin-left: 25px;
-		font-weight: 200;
-		color: rgb(215, 215, 215);
-	}
+    #buttonLabel {
+      font-family: Kodchasan;
+      font-size: 20px;
+      margin-left: 25px;
+      font-weight: 200;
+      color: rgb(215, 215, 215);
+    }
 
-	.button-container
-	{
-		display: flex;
-		align-items: baseline;
-	}
+    .button-container {
+      display: flex;
+      align-items: baseline;
+    }
 
     .submit-btn {
       background-color: #ffffff;
       color: rgb(62, 150, 161);
-	  font-family: 'Lekton';
-	  font-weight: 600;
+      font-family: 'Lekton';
+      font-weight: 600;
       padding: 10px 20px;
-      border:none;
+      border: none;
       border-radius: 20px;
       font-size: 28px;
       cursor: pointer;
       width: 100%;
-	  height: 100%;
-	  margin-left: 20px;
-	  margin-bottom: 0px;
+      height: 100%;
+      margin-left: 20px;
+      margin-bottom: 0px;
     }
 
     .submit-btn:hover {
-		background-color: rgb(170, 210, 215);
+      background-color: rgb(170, 210, 215);
     }
 
     .submit-btn:focus {
       outline: none;
     }
 
-	#registerButton
-	{
-		background-color: rgb(198, 198, 198);
-		color: rgb(109, 109, 109);
-	}
+    #registerButton {
+      background-color: rgb(198, 198, 198);
+      color: rgb(109, 109, 109);
+    }
 
-	#registerButton:hover
-	{
-    	background-color: #e4e4e4;
+    #registerButton:hover {
+      background-color: #e4e4e4;
     }
   </style>
 </head>
