@@ -534,19 +534,3 @@ function togglePasswordVisibility() {
 		toggleIcon.classList.add('fa-eye-slash');
 	}
 }
-
-function validatePassword() {
-	let passwordInput = document.getElementById('loginPassword');
-	let passwordValidation = document.getElementById('passwordValidation');
-	let password = passwordInput.value;
-	let pattern = /^(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{7,}$/;
-
-	if (!pattern.test(password)) {
-	  	document.getElementById('passwordValidation').innerHTML = "Password must be at least 8 characters long. Password must contain at least one number and one special character.";
-	  	return false;
-	} 
-	else {
-		doRegister();
-	  	return true; // Allow form submission
-	}
-  }
