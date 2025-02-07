@@ -484,7 +484,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.body.appendChild(canvas);
 
     canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight + 200;
+    canvas.height = window.innerHeight;
 
     let letterSize = 10;
     let numColumns = canvas.width / letterSize;
