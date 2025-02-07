@@ -21,26 +21,31 @@
         returnWithError("All fields must be filled to sign in.");
     }
 
-	// Get user from database that matches Login & Password
-	$stmt = $conn->prepare("SELECT ID,firstName,lastName FROM Users WHERE Login=? AND Password =?");
-	$stmt->bind_param("ss", $login, $password);
-	$stmt->execute();
-	$result = $stmt->get_result();
-
-	// Return with logged in user if successful
-	if( $row = $result->fetch_assoc() )
-	{
-		returnWithInfo($row['firstName'], $row['lastName'], $row['ID']);
-	}
-	
-	// If unsuccessful, return with error
 	else
 	{
-		returnWithError("");
+		// Get user from database that matches Login & Password
+		$stmt = $conn->prepare("SELECT ID,firstName,lastName FROM Users WHERE Login=? AND Password =?");
+		$stmt->bind_param("ss", $login, $password);
+		$stmt->execute();
+		$result = $stmt->get_result();
+
+		// Return with logged in user if successful
+		if( $row = $result->fetch_assoc() )
+		{
+			returnWithInfo($row['firstName'], $row['lastName'], $row['ID']);
+		}
+		
+		// If unsuccessful, return with error
+		else
+		{
+			returnWithError("");
+		}
+
+		// Close statement
+		$stmt->close();
 	}
 
-	// Close statement and end connection
-	$stmt->close();
+	// End connection
 	$conn->close();
 	
 	function getRequestInfo()
