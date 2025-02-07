@@ -137,11 +137,6 @@ input[type="text"],input[type="password"]{
     color: #95060a;
 }
 
-#loginResult{
-    margin-left: 5%;
-    margin-bottom: 2%;
-}
-
 #userName{
     display: inline-block;
     width: 80%;
