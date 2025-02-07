@@ -45,7 +45,7 @@
 			returnWithError("All forms must be filled.");
         }
         
-        elseif (!preg_match("/^(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{7,}$/", $newPassword))
+        elseif (!preg_match("/^(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]{7,}$/", $newPassword))
         {
             returnWithError("Password must be at least 8 characters long. Password must contain at least one number and one special character.");
         }
