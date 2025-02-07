@@ -59,6 +59,7 @@
       position: relative;
       z-index: 2;
       overflow: auto;
+      max-height: 100%;
     }
 
     .form-container 
@@ -279,7 +280,7 @@
     }
 
     .table th {
-        background-color: rgba(255, 255, 255, 0.5);
+        background-color: rgba(255, 255, 255, 1);
         font-weight: 1000;
         font-size: 30px;
         text-align: center;
@@ -294,7 +295,12 @@
     .table tr:hover {
         background-color: rgba(255, 255, 255, 0.5);
     }
-    
+
+    .table thead tr th {
+        position: sticky;
+        z-index: 100;
+        top: 0;
+    }
 
     .icon-button {
         background-color: transparent;
@@ -325,6 +331,10 @@
         border-color: rgb(62, 150, 161);
     }
 
+    #editContactResult {
+        display: inline-block;
+        margin-top: 2%;
+    }
   </style>
 
   <script type="text/javascript">
@@ -372,9 +382,9 @@
 		  </table>
 		  </div>
   
-		  <span id="editContactResult"></span>
-		  <span id="saveContactResult"></span>
-		  <span id="deleteContactResult"></span>
+          <h4><span id="editContactResult"></span></h4>
+          <h4><span id="saveContactResult"></span></h4>
+          <h4><span id="deleteContactResult"></span></h4>
   
 		  <br />
   
@@ -382,7 +392,7 @@
 		    <button type="submit" id="addContactButton" aria-label="Add a contact" class="submit-btn" onclick="window.location='add_contact.html';">Add a New Contact</button><br />
 		  </div>
   
-		  <span id="contactAddResult"></span>
+          <h4><span id="contactAddResult"></span></h4>
 	  </div>
 	</div>
 </body>
