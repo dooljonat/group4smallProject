@@ -5,7 +5,7 @@
 	ini_set("log_errors", 1); 	
 	ini_set("error_log", "/tmp/php-error.log");
 
-	include "DatabaseConnection.php";
+    include "DatabaseConnection.php";
 
 	$inData = getRequestInfo();
 	
@@ -34,7 +34,7 @@
 		$newFirstName = $inData['first'];
 		$newLastName = $inData['last'];
 		$newLogin = $inData['login'];
-		$newPassword = $inData['password'];
+        $newPassword = $inData['password'];
 
 		// Validate input
 		if ($newFirstName == null || $newFirstName == "" || 
@@ -43,8 +43,12 @@
 			 $newPassword == null || $newPassword == "")
 		{
 			returnWithError("All forms must be filled.");
-		}
-
+        }
+        
+        elseif (!preg_match("/^(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{7,}$/", $newPassword))
+        {
+            returnWithError("Password must be at least 8 characters long. Password must contain at least one number and one special character.");
+        }
 		// If input is valid...
 		else
 		{
