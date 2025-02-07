@@ -38,7 +38,7 @@
 		// If unsuccessful, return with error
 		else
 		{
-			returnWithError("");
+			returnWithError("User doesn't exist, or incorrect username/password combination. Please try again.");
 		}
 
 		// Close statement
