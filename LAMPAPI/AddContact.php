@@ -27,12 +27,12 @@
 		// Validate phone number with regex expression
 		if (!preg_match("/^[0-9]{3}-[0-9]{3}-[0-9]{4}$/", $phoneNumber))
 		{
-			returnWithError("Invalid phone number. Please use format: <###>-<###>-<####>");
+			returnWithError("Invalid phone number. Please use format: ###-###-####");
 		}
 		// Validate email with 
 		else if (!filter_var($email, FILTER_VALIDATE_EMAIL))
 		{
-			returnWithError("Invalid email address. Please use format: <email>@<address>.com");
+			returnWithError("Invalid email address. Please use format: email@address.com");
 		}
 
 		// If all input data is valid, 
