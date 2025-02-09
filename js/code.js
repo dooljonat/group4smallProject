@@ -285,8 +285,8 @@ function searchContacts()
 								<td class="phone">${contactList[i].phone}</td>
 								<td class="email">${contactList[i].email}</td>
 								<td>
-                                    <button type="button" class="icon-button" onclick="editContact(${contactList[i].id});"><i class="fas fa-pencil-alt"></i></button>
-                                    <button type="button" class="icon-button" onclick="deleteContact(${contactList[i].id});"><i class="fas fa-trash-alt"></i></button>
+                                    <button type="button" aria-label="Edit contact" class="icon-button" onclick="editContact(${contactList[i].id});"><i class="fas fa-pencil-alt"></i></button>
+                                    <button type="button" aria-label="Delete contact" class="icon-button" onclick="deleteContact(${contactList[i].id});"><i class="fas fa-trash-alt"></i></button>
                                 </td>
 								</tr>
 							`;
